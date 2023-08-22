@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import 'dart:io';
 
 class ImagePickerController extends GetxController {
   var pickedImages = <ImageData>[].obs;
-  var locationName = RxString('');
+  var localPosition = '';
 
   Future<void> pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -18,12 +19,12 @@ class ImagePickerController extends GetxController {
       final savedImage =
           await File(pickedFile.path).copy('${appDir.path}/$fileName');
 
-      await _fetchLocationName();
-      pickedImages.add(ImageData(name: locationName.value, imagePath: savedImage.path));
+      pickedImages.add(ImageData(name: localPosition, imagePath: savedImage.path));
     }
   }
 
-  Future<void> _fetchLocationName() async {
+  Future<void> fetchLocationName() async {
+    EasyLoading.show();
     try {
       await Geolocator.requestPermission();
       final Position position = await Geolocator.getCurrentPosition(
@@ -34,9 +35,11 @@ class ImagePickerController extends GetxController {
         position.longitude,
       );
       final placeMark = placeMarks.first;
-      locationName.value = placeMark.locality ?? 'Unknown Location';
+      localPosition = placeMark.subAdministrativeArea ?? "Unknown Location";
+      // locationName.value = placeMark.subAdministrativeArea ?? 'Unknown Location';
     } catch (e) {
-      locationName.value = 'Location Error';
+      localPosition = 'Location Error';
     }
+    EasyLoading.dismiss();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:interview/sreens/image_picker_screen.dart';
+import 'package:interview/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ImagePickerScreen(),
+      home: const HomePage(),
+      builder: EasyLoading.init(),
     );
   }
 }
