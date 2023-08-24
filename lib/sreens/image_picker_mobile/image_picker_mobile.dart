@@ -45,7 +45,8 @@ class _ImagePickerMobileState extends State<ImagePickerMobile> {
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
-                          Image.file(File(_controller.pickedImages[index].imagePath!)),
+                          Image.file(
+                              File(_controller.pickedImages[index].imagePath!)),
                           Positioned(
                             bottom: 16,
                             right: 16,
