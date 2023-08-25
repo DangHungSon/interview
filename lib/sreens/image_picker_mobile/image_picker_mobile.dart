@@ -43,18 +43,26 @@ class _ImagePickerMobileState extends State<ImagePickerMobile> {
                     padding: const EdgeInsets.all(8),
                     itemCount: _controller.pickedImages.length,
                     itemBuilder: (context, index) {
-                      return Stack(
+                      return Column(
                         children: [
-                          Image.file(
-                              File(_controller.pickedImages[index].imagePath!)),
-                          Positioned(
-                            bottom: 16,
-                            right: 16,
-                            child: Text(
-                              "${DateFormat('yyyy/MM/dd').format(_controller.pickedImages[index].dateTime)} \n${_controller.pickedImages[index].name!}",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 32),
-                            ),
+                          Stack(
+                            children: [
+                              Image.file(File(
+                                  _controller.pickedImages[index].imagePath!)),
+                              Positioned(
+                                bottom: 16,
+                                right: 16,
+                                child: Text(
+                                  "${DateFormat('yyyy/MM/dd').format(_controller.pickedImages[index].dateTime)} \n${_controller.pickedImages[index].name!}",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 32),
+                                ),
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Text('Ảnh ${index + 1}'),
                           )
                         ],
                       );
